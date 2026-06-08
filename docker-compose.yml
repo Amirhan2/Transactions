@@ -67,7 +67,7 @@ services:
 
   wallet-db:
     image: postgres:16
-    container_name: trans-transfer-db
+    container_name: trans-wallet-db
     networks: [trans-net]
     ports:
       - "5434:5432"
