@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package ru.amirhan.transfer.v1;
+
+import "v1/common.proto";
+
+option java_multiple_files = true;
+option java_package = "ru.amirhan.api.transfer.v1";
+option java_outer_classname = "TransferApiProto";
+
+service TransferService {
+  rpc ExecuteTransfer (TransferRequest) returns (TransferResponse);
+}
+
+message TransferRequest{
+  /*
+  Заголовок запроса.
+   */
+  ru.amirhan.common.v1.Header header = 1;
+
+  /*
+  Идентификатор отправителя
+   */
+  int64 sender_id = 2;
+
+  /*
+  Номер телефона получателя (Публичный идентификатор)
+   */
+  string receiver_phone = 3;
+
+  /*
+  Количество денег (RUB) в копейках.
+  Например, 1050 для 10 рублей 50 копеек
+   */
+  int64 cents = 4;
+}
+
+message TransferResponse{
+  enum Status {
+    SUCCESS = 0;
+    INSUFFICIENT_FUNDS = 1;
+    RECEIVER_NOT_FOUND = 2;
+    INTERNAL_ERROR = 3;
+  }
+
+  Status status = 1;
+  string message = 2;
+}
